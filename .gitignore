@@ -134,6 +134,10 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3337970e335182649df8d250e5e234ef287acb3d
 # Vite/React specific (client)
 client/node_modules/
 client/dist/
