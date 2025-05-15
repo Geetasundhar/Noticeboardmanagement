@@ -13,10 +13,17 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Create new user
-    const newUser = await User.create({ name, email, password, role });
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Respond with success
+    // Create new user with default role 'student' if not provided
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || 'student'
+    });
+
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error creating user', error: error.message });
@@ -36,15 +43,31 @@ exports.login = async (req, res) => {
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
+    console.log('Password Match:', isMatch);  // Debugging password match
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
+    
 
-    // Generate JWT token
-    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    // Generate JWT
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
 
-    res.status(200).json({ message: 'Login successful', token });
-  } catch (error) {
+    res.status(200).json({
+      message: 'Login successful',
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+  }catch (error) {
+    console.error(error);  // Log the actual error for debugging
     res.status(500).json({ message: 'Error logging in', error: error.message });
   }
 };

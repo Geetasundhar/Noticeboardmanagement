@@ -1,12 +1,7 @@
-const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
-
-// Create the MySQL connection
-const db = require('../config/db');
-
-// User model
+const db = require('../db');
 class User {
-  static async create({ name, email, password, role }) {
+  static async create({ name, email, password, role = 'student' }) { // Default to 'student'
     const hashedPassword = await bcrypt.hash(password, 10); // Hash password
     const query = `INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)`;
     return new Promise((resolve, reject) => {
@@ -27,5 +22,4 @@ class User {
     });
   }
 }
-
 module.exports = User;
