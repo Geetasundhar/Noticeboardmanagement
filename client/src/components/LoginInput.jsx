@@ -7,7 +7,7 @@ const LoginInput = ({ type, placeHolder, value, onChange, name }) => {
       value={value} 
       onChange={onChange} 
       name={name} 
-      className="w-full p-1 rounded-sm pl-3"
+      className="w-full p-1 rounded-sm pl-3 mb-6"
     />
   );
 }
