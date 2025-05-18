@@ -17,6 +17,7 @@ app.use('/uploads', express.static('uploads')); // Serve uploaded files
 app.use('/api/auth', authRoutes);  // Authentication routes (signup, login)
 app.use('/api/notices', noticeRoutes);  // Notice routes
 
+
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

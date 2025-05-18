@@ -16,6 +16,8 @@ router.put(
   noticeController.upload.single('file'),
   noticeController.updateNotice
 );
+
+
 router.delete('/:id', verifyToken, noticeController.deleteNotice);
 router.get('/', noticeController.getNotices);
 // Route to get a single notice by ID

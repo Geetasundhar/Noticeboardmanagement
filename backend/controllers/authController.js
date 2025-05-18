@@ -33,13 +33,18 @@ exports.signup = async (req, res) => {
 // Login Controller
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-
+  const bcrypt = require('bcryptjs');
+  bcrypt.hash('johns', 10).then(console.log);
   try {
     // Find user by email
     const user = await User.findByEmail(email);
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
+    
+    console.log('User Password from DB:', user.password);
+    console.log('Password from request:', password);
+
 
     // Compare password
     const isMatch = await bcrypt.compare(password, user.password);

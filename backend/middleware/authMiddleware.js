@@ -1,4 +1,8 @@
 const jwt = require("jsonwebtoken");
+const express = require("express");
+
+const router = express.Router();
+
 
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -23,5 +27,7 @@ const verifyToken = (req, res, next) => {
     return res.status(401).json({ message });
   }
 };
+//API validation
+
 
 module.exports = verifyToken;
